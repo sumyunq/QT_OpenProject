@@ -1,0 +1,5 @@
+QMainWindow {
+    background-image: url(:/img/resources/images/星.jpg);   /* 资源文件路径 */
+    background-repeat: no-repeat;                       /* 不重复，可选 repeat/repeat-x/repeat-y */
+    background-position: center;                        /* 居中 */
+}

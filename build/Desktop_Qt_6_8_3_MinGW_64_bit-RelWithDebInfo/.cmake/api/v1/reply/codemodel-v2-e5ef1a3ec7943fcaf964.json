@@ -1,0 +1,115 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RelWithDebInfo-807f044d558e1a37804f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Servers",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Servers::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Servers-RelWithDebInfo-f9741520599b337a5c2f.json",
+					"name" : "Servers",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Servers_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Servers_autogen-RelWithDebInfo-1189c6ef1715b711bdcd.json",
+					"name" : "Servers_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Servers_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Servers_autogen_timestamp_deps-RelWithDebInfo-342b53698bf05ddcd998.json",
+					"name" : "Servers_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Servers_lrelease::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Servers_lrelease-RelWithDebInfo-d8237d95225d9325c37d.json",
+					"name" : "Servers_lrelease",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Servers_lupdate::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Servers_lupdate-RelWithDebInfo-303010cafc786ea21c9c.json",
+					"name" : "Servers_lupdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "release_translations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-release_translations-RelWithDebInfo-68d3b126e3b714a925bd.json",
+					"name" : "release_translations",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "update_translations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-update_translations-RelWithDebInfo-769cf8658863ddbd970b.json",
+					"name" : "update_translations",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo",
+		"source" : "D:/a_app/QT/workspace/Servers"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

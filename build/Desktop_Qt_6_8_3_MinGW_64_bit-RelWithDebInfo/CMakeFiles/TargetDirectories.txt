@@ -1,0 +1,13 @@
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/Servers.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/Servers_lupdate.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/update_translations.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/Servers_lrelease.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/release_translations.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/edit_cache.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/rebuild_cache.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/list_install_components.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/install.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/install/local.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/install/strip.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/Servers_autogen_timestamp_deps.dir
+D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/Servers_autogen.dir

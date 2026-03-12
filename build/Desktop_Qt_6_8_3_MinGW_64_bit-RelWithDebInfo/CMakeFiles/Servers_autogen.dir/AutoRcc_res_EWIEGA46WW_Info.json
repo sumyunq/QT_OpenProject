@@ -1,0 +1,34 @@
+{
+	"BUILD_DIR" : "D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/Servers_autogen",
+	"CMAKE_BINARY_DIR" : "D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo",
+	"CMAKE_CURRENT_BINARY_DIR" : "D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo",
+	"CMAKE_CURRENT_SOURCE_DIR" : "D:/a_app/QT/workspace/Servers",
+	"CMAKE_SOURCE_DIR" : "D:/a_app/QT/workspace/Servers",
+	"INCLUDE_DIR" : "D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/Servers_autogen/include",
+	"INPUTS" : 
+	[
+		"D:/a_app/QT/workspace/Servers/configuration/config.ini",
+		"D:/a_app/QT/workspace/Servers/resources/images/control.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/\u661f.jpg",
+		"D:/a_app/QT/workspace/Servers/resources/images/down_arrow.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/dataSingle.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/mainPage.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/yuliu.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/bianma.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/yulu.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/wbliu.png",
+		"D:/a_app/QT/workspace/Servers/resources/images/title.png",
+		"D:/a_app/QT/workspace/Servers/resources/Icon/left.png",
+		"D:/a_app/QT/workspace/Servers/resources/Icon/right.png"
+	],
+	"LOCK_FILE" : "D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/Servers_autogen.dir/AutoRcc_res_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "--no-zstd", "-name", "res" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_res.cpp",
+	"RCC_EXECUTABLE" : "C:/Qt6/6.8.3/mingw_64/bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "D:/a_app/QT/workspace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-RelWithDebInfo/CMakeFiles/Servers_autogen.dir/AutoRcc_res_EWIEGA46WW_Used.txt",
+	"SOURCE" : "D:/a_app/QT/workspace/Servers/res.qrc",
+	"VERBOSITY" : 0
+}

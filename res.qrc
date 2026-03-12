@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>resources/images/星.jpg</file>
+        <file>resources/images/yulu.png</file>
+        <file>resources/images/yuliu.png</file>
+        <file>resources/images/mainPage.png</file>
+        <file>resources/images/title.png</file>
+        <file>resources/images/bianma.png</file>
+        <file>resources/images/control.png</file>
+        <file>resources/images/dataSingle.png</file>
+        <file>resources/images/down_arrow.png</file>
+        <file>resources/images/wbliu.png</file>
+    </qresource>
+    <qresource prefix="/config">
+        <file>configuration/config.ini</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>resources/Icon/left.png</file>
+        <file>resources/Icon/right.png</file>
+    </qresource>
+</RCC>

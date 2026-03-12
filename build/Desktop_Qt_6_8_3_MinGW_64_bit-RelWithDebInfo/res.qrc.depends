@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>resources/images/20170404170243_jHvkf.gif</file>
+        <file>resources/images/20200423170236_ihJPj.gif</file>
+        <file>resources/images/20200625111326_abqqp.gif</file>
+        <file>resources/images/20220722004730_3f379.gif</file>
+        <file>resources/images/de.webp</file>
+        <file>resources/images/gt.gif</file>
+        <file>resources/images/kl.jpeg</file>
+        <file>resources/images/m.gif</file>
+        <file>resources/images/mmhh.svg</file>
+        <file>resources/images/nm.jpg</file>
+        <file>resources/images/OIP-C.webp</file>
+        <file>resources/images/pl.webp</file>
+        <file>resources/images/R-C (1).jfif</file>
+        <file>resources/images/R-C.jfif</file>
+        <file>resources/images/yun.gif</file>
+        <file>resources/images/风.png.png</file>
+        <file>resources/images/小马拿红包.svg</file>
+        <file>resources/images/星.jpg</file>
+    </qresource>
+</RCC>
