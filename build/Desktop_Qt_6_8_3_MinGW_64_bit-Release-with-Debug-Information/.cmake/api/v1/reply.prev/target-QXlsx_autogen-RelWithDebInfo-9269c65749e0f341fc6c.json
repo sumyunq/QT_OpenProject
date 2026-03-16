@@ -1,0 +1,75 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"3rdparty/QXlsx-master/QXlsx/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "QXlsx_autogen_timestamp_deps::@a4e93ce4104f26dff91f"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "QtInternalTargets"
+	},
+	"id" : "QXlsx_autogen::@a4e93ce4104f26dff91f",
+	"isGeneratorProvided" : true,
+	"name" : "QXlsx_autogen",
+	"paths" : 
+	{
+		"build" : "3rdparty/QXlsx-master/QXlsx",
+		"source" : "3rdparty/QXlsx-master/QXlsx"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_6_8_3_MinGW_64_bit-Release-with-Debug-Information/3rdparty/QXlsx-master/QXlsx/CMakeFiles/QXlsx_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_6_8_3_MinGW_64_bit-Release-with-Debug-Information/3rdparty/QXlsx-master/QXlsx/CMakeFiles/QXlsx_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_6_8_3_MinGW_64_bit-Release-with-Debug-Information/3rdparty/QXlsx-master/QXlsx/QXlsx_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

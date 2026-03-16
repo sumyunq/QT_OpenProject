@@ -1,0 +1,3 @@
+D:\APP\QT6\Tools\CMake_64\bin\cmake.exe -E rm -f CMakeFiles\Servers.dir/objects.a
+D:\APP\QT6\Tools\mingw1310_64\bin\ar.exe qc CMakeFiles\Servers.dir/objects.a @CMakeFiles\Servers.dir\objects1.rsp
+D:\APP\QT6\Tools\mingw1310_64\bin\g++.exe -O2 -g -DNDEBUG -mwindows -Wl,--whole-archive CMakeFiles\Servers.dir/objects.a -Wl,--no-whole-archive -o Servers.exe -Wl,--out-implib,libServers.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Servers.dir\linkLibs.rsp

@@ -17,21 +17,31 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete this->clp_configuration;
+
 }
 
 void MainWindow::InitMumbers()
 {
     this->G_NetWorkAssistant = new NetWorkAssistant(this);
-    this->clp_fireAlarmDevice = new FireAlarmDevice();
+    // this->clp_fireAlarmDevice = new FireAlarmDevice();
+    this->clp_GB26875ServerMode = new GB26875ServerMode();
+    this->clp_GB26875ClientMode = new GB26875ClientMode();
+
+    this->clp_GB26875ServerMode->hide();
+    this->clp_GB26875ClientMode->hide();
+
+    this->clp_configuration = new Configuration();
 
     // 单次定时器
-    QTimer::singleShot(3000, this, [this]() {
-        // 3秒后执行这里,等待其连接成功
-        this->clp_fireAlarmDevice->m_sourceAddress = this->G_NetWorkAssistant->getPeerAddressBytes(this->G_NetWorkAssistant->cl_localTcpClient->getTCPSocket());
-        // this->clp_fireAlarmDevice->show();
+    // QTimer::singleShot(3000, this, [this]() {
+    //     // 3秒后执行这里,等待其连接成功
+    //     this->clp_fireAlarmDevice->m_sourceAddress = this->G_NetWorkAssistant->getPeerAddressBytes(this->G_NetWorkAssistant->cl_localTcpClient->getTCPSocket());
+    //     // this->clp_fireAlarmDevice->show();
 
-    });
+    // });
 
+    m_adcode ="440300";//默认深圳
 
     // QMovie *movie = new QMovie(":/img/resources/images/m.gif");
     // ui->testlabel->setMovie(movie);
@@ -59,6 +69,12 @@ void MainWindow::InitMumbers()
 void MainWindow::InitConnect()
 {
     QObject::connect(this->G_NetWorkAssistant,&NetWorkAssistant::updateWeatherData,this->castWeather,&CastsWeather::UpdateWeatherData);
+
+    QObject::connect(this->castWeather,&CastsWeather::ChooseCityCode,this,[this](const HighAltitudeWeatherDataSturct::AMap_adcode_citycode &citycode){
+        this->m_adcode = citycode.adcode;
+        qDebug()<<"更改城市adcode:"<<this->m_adcode;
+    });
+
 }
 
 void MainWindow::InitUIInformation()
@@ -91,6 +107,30 @@ void MainWindow::SetThemeStyle(QString style)
 
 }
 
+
+
+
+void MainWindow::on_pushButton_showGB26875_Server_clicked()
+{
+    if(this->clp_GB26875ServerMode->isHidden()){
+        this->clp_GB26875ServerMode->show();
+    }
+}
+
+
+void MainWindow::on_pushButton_showGB26875_Client_clicked()
+{
+    if(this->clp_GB26875ClientMode->isHidden()){
+        this->clp_GB26875ClientMode->show();
+    }
+}
+
+
+void MainWindow::on_pushButton_showWeather_clicked()
+{
+}
+
+
 void MainWindow::on_testNet_clicked()
 {
     // this->G_NetWorkAssistant->TestSandRequest();
@@ -98,8 +138,7 @@ void MainWindow::on_testNet_clicked()
     // 显示永久消息（直到被清除）
     this->ui->statusBar->showMessage(tr("天气数据来源高德"),2000);
     // this->G_NetWorkAssistant->RequestHighAltitudeWeatherData("https://restapi.amap.com/v3/weather/weatherInfo","23b1480f777d231887315b179e8c484f","441900","base");//请求实况天气
-    this->G_NetWorkAssistant->RequestHighAltitudeWeatherData("https://restapi.amap.com/v3/weather/weatherInfo","23b1480f777d231887315b179e8c484f","441900","all");//请求预测的数据
+    this->G_NetWorkAssistant->RequestHighAltitudeWeatherData("https://restapi.amap.com/v3/weather/weatherInfo","23b1480f777d231887315b179e8c484f",this->m_adcode,"all");//请求预测的数据
 
 }
-
 

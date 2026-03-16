@@ -12,6 +12,7 @@ class LocalTCPServer : public QObject
     Q_OBJECT
 public:
     explicit LocalTCPServer(QObject *parent = nullptr);
+    ~LocalTCPServer();
 
     //Initialize the internal members of the object
     void InitMumbers();
@@ -27,6 +28,9 @@ public:
 
 signals:
     void newClientConnected(QTcpSocket *socket, const QString& clientInfo);
+    void updateList();
+    void updateMessage(const QByteArray data);
+
     void clientDisconnected(const QString& clientInfo);
     void dataReceived(QTcpSocket *socket, const QByteArray& data);
     void serverErrorOccurred(const QString& errorString);
@@ -40,7 +44,7 @@ private slots:
     void processData(QTcpSocket *clientSocket, const QByteArray& data);
 
 
-private:
+public:
     QTcpServer *cl_tcpServer;
     QList<QTcpSocket*> m_tcpClients;
     int m_maxClients;//最大连接数

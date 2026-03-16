@@ -1,0 +1,125 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"3rdparty/QXlsx-master/QXlsx/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 194,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 201,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 216,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "devel",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"3rdparty/QXlsx-master/QXlsx/libQXlsxQt6.a"
+			],
+			"targetId" : "QXlsx::@a4e93ce4104f26dff91f",
+			"targetIndex" : 0,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "devel",
+			"destination" : "include/QXlsxQt6",
+			"paths" : 
+			[
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxabstractooxmlfile.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxabstractsheet.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxabstractsheet_p.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxcellformula.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxcell.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxcelllocation.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxcellrange.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxcellreference.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxchart.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxchartsheet.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxconditionalformatting.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxdatavalidation.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxdatetype.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxdocument.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxformat.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxglobal.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxrichstring.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxworkbook.h",
+				"3rdparty/QXlsx-master/QXlsx/header/xlsxworksheet.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"cxxModuleBmiTarget" : 
+			{
+				"id" : "QXlsx::@a4e93ce4104f26dff91f",
+				"index" : 0
+			},
+			"destination" : "lib",
+			"type" : "cxxModuleBmi"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "devel",
+			"destination" : "lib/cmake/QXlsxQt6",
+			"exportName" : "QXlsxQt6Targets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "QXlsx::@a4e93ce4104f26dff91f",
+					"index" : 0
+				}
+			],
+			"paths" : 
+			[
+				"3rdparty/QXlsx-master/QXlsx/CMakeFiles/Export/5e1a71f991ec0867fe453527b0963803/QXlsxQt6Targets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/QXlsxQt6",
+			"paths" : 
+			[
+				"build/Desktop_Qt_6_8_3_MinGW_64_bit-Release-with-Debug-Information/3rdparty/QXlsx-master/QXlsx/QXlsxQt6Config.cmake",
+				"build/Desktop_Qt_6_8_3_MinGW_64_bit-Release-with-Debug-Information/3rdparty/QXlsx-master/QXlsx/QXlsxQt6ConfigVersion.cmake"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "3rdparty/QXlsx-master/QXlsx",
+		"source" : "3rdparty/QXlsx-master/QXlsx"
+	}
+}

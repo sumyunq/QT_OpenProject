@@ -2,11 +2,20 @@
 #define HIGHALTITUDEDATASTURCT_H
 
 #include <QObject>
-
+#include <QList>
+#include <QCoreApplication>
+#include <QDir>
+#include "xlsxdocument.h"
 
 namespace HighAltitudeWeatherDataSturct {
 
 // QString HighAltitudeWeatherURL="";//高德天气查询API服务地址
+
+typedef struct AMap_adcode_citycode{
+    QString ChineseName;
+    QString adcode;
+    QString citycode;
+}AMap_adcode_citycode;
 
 typedef struct WeatherRequestData{
     QString key;
@@ -66,6 +75,15 @@ typedef struct WeatherRequestReturnData{
     QVector<LivesWeatherData> livesWeatherData_Vector;//实况天气数据信息,具体数据见前面的声明
     ForecastsWeatherData forecastsWeatherData;//预测天气数据信息,具体数据见前面的声明
 }WeatherRequestReturnData;
+
+//read AMap_adcode_citycode.xlsx
+/**
+ * 从 xlsx 文件读取高德行政区划代码数据
+ * @param filePath  文件路径
+ * @param list_adcode 存储读取结果的列表
+ */
+void Read_AMap_adcode_citycode(QString filePath, QList<AMap_adcode_citycode> &list_adcode);
+
 
 }
 

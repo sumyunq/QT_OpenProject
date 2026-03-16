@@ -10,7 +10,11 @@
 
 #include "./src/NetWorkModule/NetWorkAssistant.h"
 #include "./src/Tools/GlobalTools.h"
+#include "./src/Tools/ConfigManager.h"
 #include "./src/Widgets/CastsWeather.h"
+#include "./src/Widgets/GB26875ServerMode.h"
+#include "./src/Widgets/GB26875ClientMode.h"
+#include "./src/Widgets/Configuration.h"
 #include "./src/RemoteFireProtectionModule/FireAlarmDevice.h"
 
 
@@ -38,18 +42,32 @@ public:
     void SetThemeStyle(QString style);
 
 
+
+
+
+private slots:
+
+    void on_pushButton_showGB26875_Server_clicked();
+
+    void on_pushButton_showGB26875_Client_clicked();
+
+    void on_pushButton_showWeather_clicked();
+
+    void on_testNet_clicked();
+
+public:
+
     // GlobalTools *G_GlobalTools;
     NetWorkAssistant *G_NetWorkAssistant;
 
     CastsWeather *castWeather;
+    Configuration *clp_configuration;
+
+    QString  m_adcode;
 
 
-private slots:
-    void on_testNet_clicked();
-
-
-public:
-    FireAlarmDevice* clp_fireAlarmDevice;
+    GB26875ServerMode *clp_GB26875ServerMode;
+    GB26875ClientMode *clp_GB26875ClientMode;
 
 private:
     Ui::MainWindow *ui;

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/img">
-        <file>resources/images/星.jpg</file>
         <file>resources/images/yulu.png</file>
         <file>resources/images/yuliu.png</file>
         <file>resources/images/mainPage.png</file>
@@ -10,6 +9,24 @@
         <file>resources/images/dataSingle.png</file>
         <file>resources/images/down_arrow.png</file>
         <file>resources/images/wbliu.png</file>
+        <file>resources/images/weatherBackground.png</file>
+        <file>resources/images/weatherBackground_2.png</file>
+        <file>resources/Icon/cloudy.mp4</file>
+        <file>resources/Icon/cloudy-02.mp4</file>
+        <file>resources/Icon/cloudy-03.mp4</file>
+        <file>resources/Icon/cloudy-and-rainny.mp4</file>
+        <file>resources/Icon/fog.mp4</file>
+        <file>resources/Icon/full-moon.mp4</file>
+        <file>resources/Icon/light-snow.mp4</file>
+        <file>resources/Icon/night.mp4</file>
+        <file>resources/Icon/night-cloudy.mp4</file>
+        <file>resources/Icon/night-rain.mp4</file>
+        <file>resources/Icon/night-rain-and-storm.mp4</file>
+        <file>resources/Icon/Rain.mp4</file>
+        <file>resources/Icon/sunny-day.mp4</file>
+        <file>resources/Icon/sunny-hight.mp4</file>
+        <file>resources/Icon/thunder.mp4</file>
+        <file>resources/Icon/typhoon.mp4</file>
     </qresource>
     <qresource prefix="/config">
         <file>configuration/config.ini</file>

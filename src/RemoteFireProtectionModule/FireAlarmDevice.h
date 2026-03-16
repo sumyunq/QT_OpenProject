@@ -5,6 +5,8 @@
 #include <QLineEdit>
 #include <QTimer>
 #include <QDateTime>
+#include <QTcpServer>
+#include <QTcpSocket>
 
 #include "../ProtocolModule/GB26875ServerProtoco1.h"
 
@@ -26,6 +28,16 @@ public:
     //Initialize the necessary connection signal slots
     void InitConnect();
 
+    void setIPSourceAddress(QTcpServer *tcpServer);
+    void setIPSourceAddress(QTcpSocket *tcpSocket);
+
+    void setIPDestinationAddress(QTcpServer *tcpServer);
+    void setIPDestinationAddress(QTcpSocket *tcpSocket);
+    void setIPDestinationAddress(QHostAddress hostAddress,quint16 port);
+
+    QString getDestinationAddress();
+
+
     //可以写入日志后,定期删除GB26875::GB26875DataStruct
 
 private slots:
@@ -41,7 +53,7 @@ public:
     QByteArray dataPackage;
 
 
-    QByteArray m_sourceAddress;
+    // QByteArray m_sourceAddress;
     QByteArray m_destinationAddress;
 
 

@@ -1,0 +1,10 @@
+# Hashes of file build rules.
+a093f785daead78b9ef38cf5008d7a0c .qt/rcc/qrc_Servers_translations.cpp
+03c0ef6515c9ac02cc04a28ed8bc6b42 3rdparty/QXlsx-master/QXlsx/CMakeFiles/QXlsx_autogen
+afd038f54c0334bb439028cb50ac1146 3rdparty/QXlsx-master/QXlsx/QXlsx_autogen/timestamp
+f6b92d552dc85262b845dcdba89727c0 CMakeFiles/Servers_autogen
+f6b92d552dc85262b845dcdba89727c0 CMakeFiles/Servers_lrelease
+7e148d8ea5798cb8f13f0835e02d61e0 CMakeFiles/Servers_lupdate
+fd4bdbad70e338fc55ff03707065ced6 Servers_autogen/EWIEGA46WW/qrc_res.cpp
+48127f7b778ae0560c7c5ca46f53b197 Servers_autogen/timestamp
+b1a085b6dc3712e47f6243dbca1fd448 Servers_zh_CN.qm

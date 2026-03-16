@@ -10,6 +10,11 @@ LocalTCPServer::LocalTCPServer(QObject *parent)
 
 }
 
+LocalTCPServer::~LocalTCPServer()
+{
+    this->cl_tcpServer->close();
+}
+
 void LocalTCPServer::InitMumbers()
 {
     cl_tcpServer = new QTcpServer(this);
@@ -40,8 +45,21 @@ void LocalTCPServer::DealNewConection()
 
 bool LocalTCPServer::StartServer(quint16 port, const QHostAddress &address)
 {
+    // if(!cl_tcpServer->isListening()){
+    //     if (!cl_tcpServer->listen(address, port)) {
+    //         qCritical() << "服务器启动失败:" << cl_tcpServer->errorString();
+    //         return false;
+    //     }
+    //     qDebug() << "服务器启动成功，监听地址:" << address.toString() << "端口:" << port;
+    //     return true;
+    // }else{
+    //     qDebug() << "服务器正在监听地址:" << address.toString() << "端口:" << port;
+    //     return true;
+    // }
+
+    //只监听IPV4
     if(!cl_tcpServer->isListening()){
-        if (!cl_tcpServer->listen(address, port)) {
+        if (!cl_tcpServer->listen(QHostAddress::AnyIPv4, port)) {
             qCritical() << "服务器启动失败:" << cl_tcpServer->errorString();
             return false;
         }
@@ -96,7 +114,7 @@ void LocalTCPServer::handlePendingConnections()
         QTcpSocket *clientSocket = cl_tcpServer->nextPendingConnection();
 
         // 设置 socket 选项
-        clientSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+        // clientSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
         clientSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1); // TCP_NODELAY
 
         // 存储连接时间
@@ -121,6 +139,7 @@ void LocalTCPServer::handlePendingConnections()
                  << "] 当前连接数:" << m_tcpClients.size();
 
         emit newClientConnected(clientSocket, clientInfo);
+        emit updateList();
     }
 }
 
@@ -157,6 +176,7 @@ void LocalTCPServer::onDisconnected()
     clientSocket->deleteLater();
 
     emit clientDisconnected(clientInfo);
+    emit updateList();
 }
 
 void LocalTCPServer::onErrorOccurred(QAbstractSocket::SocketError error)
@@ -188,16 +208,20 @@ void LocalTCPServer::handleServerError(QAbstractSocket::SocketError error)
 
 void LocalTCPServer::processData(QTcpSocket *clientSocket, const QByteArray &data)
 {
-    // 在这里实现您的协议解析
-    // 可以根据数据内容做出响应
-
-    // 示例：简单回声服务
-    // clientSocket->write(data);
+    // 在这里实现协议解析
+    // 并根据数据内容做出响应、暂定：通过发送信号去执行某些操作
 
     qDebug() << "收到数据:" << data.toHex() << "(" << data.size() << "字节)";
+
+    // 暂时做回显处理
+    clientSocket->write(data);
+    emit updateMessage(data);
+
+
+
     // 如果是文本，也打印出来
-    QString text = QString::fromUtf8(data);
-    if (!text.isEmpty() && !text.contains(QChar::ReplacementCharacter)) {
-        qDebug() << "收到文本:" << text;
-    }
+    // QString text = QString::fromUtf8(data);
+    // if (!text.isEmpty() && !text.contains(QChar::ReplacementCharacter)) {
+    //     qDebug() << "收到文本:" << text;
+    // }
 }

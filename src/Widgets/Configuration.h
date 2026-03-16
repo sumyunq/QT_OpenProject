@@ -2,6 +2,9 @@
 #define CONFIGURATION_H
 
 #include <QWidget>
+#include <QSettings>
+#include <QString>
+#include <QDebug>
 
 namespace Ui {
 class Configuration;
@@ -14,6 +17,7 @@ class Configuration : public QWidget
 public:
     explicit Configuration(QWidget *parent = nullptr);
     ~Configuration();
+
 
 private:
     Ui::Configuration *ui;

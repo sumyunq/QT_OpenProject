@@ -16,8 +16,10 @@ public:
     explicit FileHelper(QObject *parent = nullptr);
     QString ReadFile(QString filePath,QString fileType =".txt");
 
+
     static bool loadServerConfig(QString& host, quint16& port);
-    static void createDefaultConfig(const QString& path);
+    static void createDefaultConfig(const QString& path);\
+
 signals:
 
 

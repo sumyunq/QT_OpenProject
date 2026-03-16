@@ -14,7 +14,10 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">
+QMainWindow#MainWindow{
+	border-image: url(:/img/resources/images/weatherBackground.png);
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -25,16 +28,41 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="pushButton_showWeather">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>天气模块</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="pushButton_showGB26875_Server">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
-          <string>GB26875协议模块</string>
+          <string>GB26875协议模块（服务器模式）</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_showGB26875_Client">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>GB26875协议模块（客户端模式）</string>
          </property>
         </widget>
        </item>
@@ -44,7 +72,7 @@
     <item>
      <widget class="QWidget" name="mid_widget" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -54,15 +82,24 @@
     </item>
     <item>
      <widget class="QWidget" name="right_widget" native="true">
+      <property name="styleSheet">
+       <string notr="true">
+
+QWidget#right_widget  {
+
+
+color: white;           /* 设置字体颜色为白色 */
+}</string>
+      </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="0">
+       <item row="1" column="0">
         <widget class="QPushButton" name="testNet">
          <property name="text">
-          <string>天气数据测试</string>
+          <string>天气数据更新</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2">
+       <item row="0" column="0" colspan="3">
         <widget class="QWidget" name="svg_widget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -73,7 +110,20 @@
          <layout class="QVBoxLayout" name="verticalLayout"/>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="1" column="1">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0" colspan="2">
         <widget class="QWidget" name="widget_weather" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_2"/>
         </widget>

@@ -10,6 +10,12 @@
     <height>1200</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -381,6 +387,16 @@ QComboBox QAbstractItemView {
             <widget class="QLabel" name="label_6">
              <property name="text">
               <string>源地址(低字节在前，(6字节)):</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_sourceAddress">
+             <property name="text">
+              <string>127.0.0.1</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -1078,7 +1094,7 @@ QScrollBar::sub-page:horizontal {
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-14</y>
+              <y>0</y>
               <width>804</width>
               <height>336</height>
              </rect>

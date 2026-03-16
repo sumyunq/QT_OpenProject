@@ -1,0 +1,5 @@
+set(__QT_DEPLOY_TARGET_QXlsx_FILE D:/QT6WorkSpace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-Release-with-Debug-Information/3rdparty/QXlsx-master/QXlsx/libQXlsxQt6.a)
+set(__QT_DEPLOY_TARGET_QXlsx_TYPE STATIC_LIBRARY)
+set(__QT_DEPLOY_TARGET_Servers_FILE D:/QT6WorkSpace/Servers/build/Desktop_Qt_6_8_3_MinGW_64_bit-Release-with-Debug-Information/Servers.exe)
+set(__QT_DEPLOY_TARGET_Servers_TYPE EXECUTABLE)
+set(__QT_DEPLOY_TARGET_Servers_RUNTIME_DLLS D:/APP/QT6/6.8.3/mingw_64/bin/Qt6SvgWidgets.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6DataVisualization.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6PrintSupport.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6MultimediaWidgets.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6Svg.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6OpenGL.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6Widgets.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6Multimedia.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6Network.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6Gui.dll;D:/APP/QT6/6.8.3/mingw_64/bin/Qt6Core.dll)

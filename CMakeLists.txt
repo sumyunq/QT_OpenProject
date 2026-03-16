@@ -1,15 +1,20 @@
 cmake_minimum_required(VERSION 3.19)
 project(Servers LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets LinguistTools Network Svg SvgWidgets DataVisualization PrintSupport)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets LinguistTools Network Svg SvgWidgets DataVisualization PrintSupport Multimedia MultimediaWidgets)
 
 qt_standard_project_setup()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTORCC ON)   #参考: https://doc.qt.io/qt-6.8/zh/resources.html
 set(CMAKE_AUTOUIC ON)   #开启自动处理 ui 文件
+# 为所有 C++ 目标添加 -O2 优化
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/resources/WBLIU.rc")
+
+# add_subdirectory(3rdparty/QXlsx)
+add_subdirectory(3rdparty/QXlsx-master/QXlsx)
 
 qt_add_executable(Servers
     WIN32 MACOSX_BUNDLE
@@ -31,6 +36,9 @@ qt_add_executable(Servers
     src/RemoteFireProtectionModule/FireAlarmDevice.h src/RemoteFireProtectionModule/FireAlarmDevice.cpp src/RemoteFireProtectionModule/FireAlarmDevice.ui
     src/qcustomplot/qcustomplot.cpp src/qcustomplot/qcustomplot.h
     ${app_icon_resource_windows}
+    src/Tools/ConfigManager.h src/Tools/ConfigManager.cpp
+    src/Widgets/GB26875ServerMode.h src/Widgets/GB26875ServerMode.cpp src/Widgets/GB26875ServerMode.ui
+    src/Widgets/GB26875ClientMode.h src/Widgets/GB26875ClientMode.cpp src/Widgets/GB26875ClientMode.ui
 
 )
 
@@ -52,6 +60,9 @@ target_link_libraries(Servers
         Qt6::SvgWidgets
         Qt6::DataVisualization
         Qt6::PrintSupport
+        QXlsx::QXlsx
+        Qt6::Multimedia
+        Qt6::MultimediaWidgets
 )
 
 include(GNUInstallDirs)

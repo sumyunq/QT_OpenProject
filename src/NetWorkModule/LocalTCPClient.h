@@ -57,7 +57,7 @@ private slots:
     void onStateChanged(QAbstractSocket::SocketState state);
     void onBytesWritten(qint64 bytes);
 
-private:
+public:
     QTcpSocket *m_socket;
     QString m_host;
     quint16 m_port;

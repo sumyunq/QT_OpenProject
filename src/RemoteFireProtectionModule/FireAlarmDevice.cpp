@@ -103,7 +103,7 @@ void FireAlarmDevice::InitConnect()
 
         // ui->lineEdit_sourceAddress->setText(QString("%1").arg(m_sourceAddress.toHex(), 12, 16, QChar('0')).toUpper());
         // qDebug()<<this->m_sourceAddress.toHex();
-        ui->lineEdit_sourceAddress->setText(this->m_sourceAddress.toHex());
+
 
     });
 
@@ -166,26 +166,241 @@ void FireAlarmDevice::InitConnect()
 
         // 3. 按小端序（低字节在前）构建字节数组
         QByteArray data;
-        // IP 地址小端序：原顺序 [b1, b2, b3, b4] → 存储为 [b4, b3, b2, b1]
-        data.append(static_cast<char>(ipBytes[3])); // 原最低字节（b4）
-        data.append(static_cast<char>(ipBytes[2])); // b3
-        data.append(static_cast<char>(ipBytes[1])); // b2
-        data.append(static_cast<char>(ipBytes[0])); // b1
-        // 端口小端序：低字节在前
-        data.append(static_cast<char>(port & 0xFF));       // 低字节
-        data.append(static_cast<char>((port >> 8) & 0xFF)); // 高字节
+        //  显示时不需要按低地址在前，字节序问题会自动处理
+        // // IP 地址小端序：原顺序 [b1, b2, b3, b4] → 存储为 [b4, b3, b2, b1]
+        // data.append(static_cast<char>(ipBytes[3])); // 原最低字节（b4）
+        // data.append(static_cast<char>(ipBytes[2])); // b3
+        // data.append(static_cast<char>(ipBytes[1])); // b2
+        // data.append(static_cast<char>(ipBytes[0])); // b1
+        // // 端口小端序：低字节在前
+        // data.append(static_cast<char>(port & 0xFF));       // 低字节
+        // data.append(static_cast<char>((port >> 8) & 0xFF)); // 高字节
+
+        data.append(static_cast<char>(ipBytes[0]));
+        data.append(static_cast<char>(ipBytes[1]));
+        data.append(static_cast<char>(ipBytes[2]));
+        data.append(static_cast<char>(ipBytes[3]));
+        data.append(static_cast<char>(port >> 8) & 0xFF);
+        data.append(static_cast<char>(port & 0xFF));
 
         // 4. 转换为十六进制字符串（大写）
         QString hexResult = data.toHex().toUpper();
         qDebug() << "小端序十六进制:" << hexResult;
 
-        // 如果需要显示到某个 QLineEdit
+        // 显示到 QLineEdit
         ui->lineEdit_destinationAddress->setText(hexResult);
 
     });
 
 
     ui->stackedWidget->setCurrentIndex(0);
+}
+
+void FireAlarmDevice::setIPSourceAddress(QTcpServer *tcpServer)
+{
+    if (!tcpServer || !tcpServer->isListening()) {
+        qWarning() << "tcpServer is not listening";
+        return;
+    }
+    QHostAddress serverAddress = tcpServer->serverAddress();
+    quint16 serverPort = tcpServer->serverPort();
+
+    // 仅支持 IPv4
+    if (serverAddress.protocol() != QAbstractSocket::IPv4Protocol) {
+        qWarning() << "Only IPv4 supported for source address";
+        return;
+    }
+
+    quint32 ipv4 = serverAddress.toIPv4Address();
+
+    // 分解 IP 字节（从高到低）
+    quint8 ipBytes[4];
+    ipBytes[0] = (ipv4 >> 24) & 0xFF;   // 最高位，如 192
+    ipBytes[1] = (ipv4 >> 16) & 0xFF;   // 次高位，如 168
+    ipBytes[2] = (ipv4 >> 8) & 0xFF;    // 次低位，如 0
+    ipBytes[3] = ipv4 & 0xFF;            // 最低位，如 1
+
+    // 构造6字节地址：IP (4字节) + 端口 (2字节)
+    QByteArray srcAddr;
+    // 构建 4 字节 IP
+    srcAddr.append(static_cast<char>(ipBytes[0]));
+    srcAddr.append(static_cast<char>(ipBytes[1]));
+    srcAddr.append(static_cast<char>(ipBytes[2]));
+    srcAddr.append(static_cast<char>(ipBytes[3]));
+
+    // 添加 2 字节端口
+    srcAddr.append(static_cast<char>((serverPort >> 8) & 0xFF));
+    srcAddr.append(static_cast<char>(serverPort & 0xFF));
+
+    ui->lineEdit_sourceAddress->setText(srcAddr.toHex().toUpper());
+    ui->label_sourceAddress->setText(serverAddress.toString()+":"+QString::number(serverPort));
+}
+
+void FireAlarmDevice::setIPSourceAddress(QTcpSocket *tcpSocket)
+{
+    if (!tcpSocket || tcpSocket->state() != QAbstractSocket::ConnectedState) {
+        qWarning() << "socket 未连接";
+        return ;
+    }
+
+    QHostAddress localAddress = tcpSocket->localAddress();
+    quint16 localPort = tcpSocket->localPort();
+    qDebug() << __FUNCTION__ << __LINE__ << "端口"<< QString::number(localPort);
+
+
+    // 确保是 IPv4 地址（6 字节编码仅支持 IPv4）
+    if (localAddress.protocol() != QAbstractSocket::IPv4Protocol) {
+        qWarning() << "仅支持 IPv4 地址";
+        return ;
+    }
+
+    // 获取 IPv4 地址的 32 位整数（主机字节序）
+    quint32 ipv4 = localAddress.toIPv4Address();
+
+    // 分解 IP 字节（从高到低）
+    quint8 ipBytes[4];
+    ipBytes[0] = (ipv4 >> 24) & 0xFF;   // 最高位，如 192
+    ipBytes[1] = (ipv4 >> 16) & 0xFF;   // 次高位，如 168
+    ipBytes[2] = (ipv4 >> 8) & 0xFF;    // 次低位，如 0
+    ipBytes[3] = ipv4 & 0xFF;            // 最低位，如 1
+
+    // 仅用于显示，字节序应在传输时再更改
+    // 构建 4 字节 IP
+    QByteArray result;
+    result.append(static_cast<char>(ipBytes[0]));
+    result.append(static_cast<char>(ipBytes[1]));
+    result.append(static_cast<char>(ipBytes[2]));
+    result.append(static_cast<char>(ipBytes[3]));
+
+    // 添加 2 字节端口
+    result.append(static_cast<char>((localPort >> 8) & 0xFF));
+    result.append(static_cast<char>(localPort & 0xFF));
+
+    ui->lineEdit_sourceAddress->setText(result.toHex());
+    ui->label_sourceAddress->setText(localAddress.toString()+":"+QString::number(localPort));
+}
+
+void FireAlarmDevice::setIPDestinationAddress(QTcpServer *tcpServer)
+{
+    if (!tcpServer || !tcpServer->isListening()) {
+        qWarning() << "tcpServer is not listening";
+        return;
+    }
+    QHostAddress serverAddress = tcpServer->serverAddress();
+    quint16 serverPort = tcpServer->serverPort();
+
+    // 仅支持 IPv4
+    if (serverAddress.protocol() != QAbstractSocket::IPv4Protocol) {
+        qWarning() << "Only IPv4 supported for source address";
+        return;
+    }
+
+    quint32 ipv4 = serverAddress.toIPv4Address();
+
+    // 分解 IP 字节（从高到低）
+    quint8 ipBytes[4];
+    ipBytes[0] = (ipv4 >> 24) & 0xFF;   // 最高位，如 192
+    ipBytes[1] = (ipv4 >> 16) & 0xFF;   // 次高位，如 168
+    ipBytes[2] = (ipv4 >> 8) & 0xFF;    // 次低位，如 0
+    ipBytes[3] = ipv4 & 0xFF;            // 最低位，如 1
+
+    // 构造6字节地址：IP (4字节) + 端口 (2字节)
+    QByteArray srcAddr;
+    // 构建 4 字节 IP
+    srcAddr.append(static_cast<char>(ipBytes[0]));
+    srcAddr.append(static_cast<char>(ipBytes[1]));
+    srcAddr.append(static_cast<char>(ipBytes[2]));
+    srcAddr.append(static_cast<char>(ipBytes[3]));
+
+    // 添加 2 字节端口
+    srcAddr.append(static_cast<char>((serverPort >> 8) & 0xFF));
+    srcAddr.append(static_cast<char>(serverPort & 0xFF));
+
+    ui->lineEdit_destinationAddress->setText(srcAddr.toHex().toUpper());
+    ui->lineEdit_targetIPPort->setText(serverAddress.toString()+":"+QString::number(serverPort));
+}
+
+void FireAlarmDevice::setIPDestinationAddress(QTcpSocket *tcpSocket)
+{
+    if (!tcpSocket || tcpSocket->state() != QAbstractSocket::ConnectedState) {
+        qWarning() << "socket 未连接";
+        return ;
+    }
+
+    QHostAddress localAddress = tcpSocket->localAddress();
+    quint16 localPort = tcpSocket->localPort();
+
+    // 确保是 IPv4 地址（6 字节编码仅支持 IPv4）
+    if (localAddress.protocol() != QAbstractSocket::IPv4Protocol) {
+        qWarning() << "仅支持 IPv4 地址";
+        return ;
+    }
+
+    // 获取 IPv4 地址的 32 位整数（主机字节序）
+    quint32 ipv4 = localAddress.toIPv4Address();
+
+    // 分解 IP 字节（从高到低）
+    quint8 ipBytes[4];
+    ipBytes[0] = (ipv4 >> 24) & 0xFF;   // 最高位，如 192
+    ipBytes[1] = (ipv4 >> 16) & 0xFF;   // 次高位，如 168
+    ipBytes[2] = (ipv4 >> 8) & 0xFF;    // 次低位，如 0
+    ipBytes[3] = ipv4 & 0xFF;            // 最低位，如 1
+
+    // 仅用于显示，字节序应在传输时再更改
+    // 构建 4 字节 IP
+    QByteArray result;
+    result.append(static_cast<char>(ipBytes[0]));
+    result.append(static_cast<char>(ipBytes[1]));
+    result.append(static_cast<char>(ipBytes[2]));
+    result.append(static_cast<char>(ipBytes[3]));
+
+    // 添加 2 字节端口
+    result.append(static_cast<char>((localPort >> 8) & 0xFF));
+    result.append(static_cast<char>(localPort & 0xFF));
+
+    ui->lineEdit_destinationAddress->setText(result.toHex());
+    ui->lineEdit_targetIPPort->setText(localAddress.toString()+":"+QString::number(localPort));
+}
+
+void FireAlarmDevice::setIPDestinationAddress(QHostAddress hostAddress, quint16 port)
+{
+
+    // 确保是 IPv4 地址（6 字节编码仅支持 IPv4）
+    if (hostAddress.protocol() != QAbstractSocket::IPv4Protocol) {
+        qWarning() << "仅支持 IPv4 地址";
+        return ;
+    }
+
+    // 获取 IPv4 地址的 32 位整数（主机字节序）
+    quint32 ipv4 = hostAddress.toIPv4Address();
+
+    // 分解 IP 字节（从高到低）
+    quint8 ipBytes[4];
+    ipBytes[0] = (ipv4 >> 24) & 0xFF;   // 最高位，如 192
+    ipBytes[1] = (ipv4 >> 16) & 0xFF;   // 次高位，如 168
+    ipBytes[2] = (ipv4 >> 8) & 0xFF;    // 次低位，如 0
+    ipBytes[3] = ipv4 & 0xFF;            // 最低位，如 1
+
+    // 仅用于显示，字节序应在传输时再更改
+    // 构建 4 字节 IP
+    QByteArray result;
+    result.append(static_cast<char>(ipBytes[0]));
+    result.append(static_cast<char>(ipBytes[1]));
+    result.append(static_cast<char>(ipBytes[2]));
+    result.append(static_cast<char>(ipBytes[3]));
+
+    // 添加 2 字节端口
+    result.append(static_cast<char>((port >> 8) & 0xFF));
+    result.append(static_cast<char>(port & 0xFF));
+
+    ui->lineEdit_destinationAddress->setText(result.toHex());
+    ui->lineEdit_targetIPPort->setText(hostAddress.toString()+":"+QString::number(port));
+}
+
+
+QString FireAlarmDevice::getDestinationAddress()
+{
+    return this->ui->lineEdit_destinationAddress->text();
 }
 
 void FireAlarmDevice::on_comboBox_cmdType_currentIndexChanged(int index)
@@ -683,6 +898,7 @@ void FireAlarmDevice::on_pushButton_create_clicked()
     tmp_dataPackage.endMark = QByteArray::fromHex(ui->lineEdit_endMark->text().toLatin1());
 
     m_GB26875Data_List.append(tmp_dataPackage);
+    this->dataPackage.clear();
     this->dataPackage = tmp_dataPackage.combinationInfo();
     ui->textEdit->setText(tmp_dataPackage.combinationInfo().toHex());
 }

@@ -5,6 +5,7 @@
 #include <QTranslator>
 #include <Q3DBars>
 
+#include "./src/Tools/ConfigManager.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +22,15 @@ int main(int argc, char *argv[])
     }
 
     a.setWindowIcon(QIcon(":/img/resources/images/wbliu.png"));
+    ConfigManager& config = ConfigManager::instance(QCoreApplication::applicationDirPath()+"/configuration/config.ini");
 
+    QObject::connect(&config, &ConfigManager::configReloaded, [](){
+        qDebug() << "[ConfigManager] 配置已热加载!";
+    });
+
+    auto serverConfig = config.getServerConfig();
+    qDebug() << "Server Host:" << serverConfig.host;
+    qDebug() << "Server Port:" << serverConfig.port;
     MainWindow w;
     w.show();
 
@@ -39,9 +48,6 @@ int main(int argc, char *argv[])
     // series->dataProxy()->addRow(data);
     // bars.addSeries(series);
     // bars.show();
-
-
-
 
     return a.exec();
 }

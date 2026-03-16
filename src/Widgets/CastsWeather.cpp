@@ -6,6 +6,10 @@ CastsWeather::CastsWeather(QWidget *parent)
 {
     ui->setupUi(this);
     this->InitUIInformation();
+
+    this->InitMumbers();
+    this->InitConnect();
+    this->ui->drawWeatherData->hide();
 }
 
 CastsWeather::~CastsWeather()
@@ -13,16 +17,146 @@ CastsWeather::~CastsWeather()
     delete ui;
 }
 
+void CastsWeather::InitMumbers()
+{
+    // 创建 tracer 并绑定 graph
+    tracer_dayTemps = new QCPItemTracer(ui->drawWeatherData);
+    tracer_dayTemps->setGraph(ui->drawWeatherData->graph(0));
+    tracer_dayTemps->setStyle(QCPItemTracer::tsCircle);
+    tracer_dayTemps->setPen(QPen(Qt::red));
+    tracer_dayTemps->setBrush(Qt::red);
+    tracer_dayTemps->setSize(8);
+
+    label_dayTemps = new QCPItemText(ui->drawWeatherData);
+    label_dayTemps->setLayer("overlay");
+    label_dayTemps->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    label_dayTemps->position->setParentAnchor(tracer_dayTemps->position);
+    label_dayTemps->setFont(QFont("Arial", 9));
+    label_dayTemps->setColor(Qt::white);
+    label_dayTemps->setText("");
+
+    tracer_nightTemps = new QCPItemTracer(ui->drawWeatherData);
+    tracer_nightTemps->setGraph(ui->drawWeatherData->graph(1));
+    tracer_nightTemps->setStyle(QCPItemTracer::tsCircle);
+    tracer_nightTemps->setPen(QPen(Qt::blue)); // 可改用不同颜色区分
+    tracer_nightTemps->setBrush(Qt::blue);
+    tracer_nightTemps->setSize(8);
+
+    label_nightTemps = new QCPItemText(ui->drawWeatherData);
+    label_nightTemps->setLayer("overlay"); // 统一使用 overlay
+    label_nightTemps->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    label_nightTemps->position->setParentAnchor(tracer_nightTemps->position);
+    label_nightTemps->setFont(QFont("Arial", 9));
+    label_nightTemps->setColor(Qt::white);
+    label_nightTemps->setText("");
+
+    // 鼠标移动事件
+    connect(ui->drawWeatherData, &QCustomPlot::mouseMove, this,
+            [=](QMouseEvent *event) {
+                if (!tracer_dayTemps->graph() || !tracer_nightTemps->graph())
+                    return;  // 无数据时不处理
+
+                double x = ui->drawWeatherData->xAxis->pixelToCoord(event->pos().x());
+                // qDebug() << " 数据索引: " <<  x;
+                int index = qRound(x);  // 四舍五入取整
+
+                // 确保索引不越界
+                if (index >= 0 && index < casts.size()) {
+                    ui->label_dayweather->setText(this->casts.at(index).dayweather);
+                    ui->label_daywind->setText(this->casts.at(index).daywind);
+                    ui->label_daypower->setText(this->casts.at(index).daypower);
+                    ui->label_nightweather->setText(this->casts.at(index).nightweather);
+                    ui->label_nightwind->setText(this->casts.at(index).nightwind);
+                    ui->label_nightpower->setText(this->casts.at(index).nightpower);
+
+
+                    // 设置视频源（选择你的 MP4 文件）
+                    if(ui->label_dayweather->text().contains("晴")){
+                        // player->setSource(QUrl::fromLocalFile(":/img/resources/Icon/sunny-day.mp4"));
+                        // // 开始播放
+                        // player->play();
+                    }
+
+
+                } else {
+                    qDebug() << "点击位置超出数据范围";
+                }
+
+                // 更新白天 tracer
+                tracer_dayTemps->setGraphKey(x);
+                tracer_dayTemps->updatePosition();
+                double dayTemp = tracer_dayTemps->position->value();
+                label_dayTemps->setText(QString::number(dayTemp, 'f', 1) + "°C");
+
+                // 更新夜间 tracer
+                tracer_nightTemps->setGraphKey(x);
+                tracer_nightTemps->updatePosition();
+                double nightTemp = tracer_nightTemps->position->value();
+                label_nightTemps->setText(QString::number(nightTemp, 'f', 1) + "°C");
+
+                ui->drawWeatherData->replot();
+            });
+
+    // player = new QMediaPlayer(this->ui->label_iconForWeather);
+    // videoWidget = new QVideoWidget(this->ui->label_iconForWeather);
+
+    // QVBoxLayout *layout = new QVBoxLayout(ui->label_iconForWeather);
+    // layout->setContentsMargins(0, 0, 0, 0);
+    // layout->addWidget(videoWidget);
+
+    // 设置视频输出
+    // player->setVideoOutput(videoWidget);
+
+
+}
+
+void CastsWeather::InitConnect()
+{
+    QObject::connect(this->ui->comboBox_city,&QComboBox::currentIndexChanged,this,[this](){
+        emit(ChooseCityCode(this->list_adcode.at(this->ui->comboBox_city->currentIndex() + 2)));
+    });
+}
+
 void CastsWeather::InitUIInformation()
 {
+    ui->drawWeatherData->setMouseTracking(true);
+    // connect(ui->drawWeatherData, &QCustomPlot::mouseMove, this, &CastsWeather::showWeatherData);
+    HighAltitudeWeatherDataSturct::Read_AMap_adcode_citycode(QString("resources/file/AMap_adcode_citycode.xlsx"), this->list_adcode);
+    // qDebug()<< "读取" << this->list_adcode.size()<< "行数据";
+    if(this->list_adcode.size() >= 2)
+    {
+        for(int i=2; i < this->list_adcode.size();i++){
+            this->ui->comboBox_city->addItem(list_adcode.at(i).ChineseName);
+        }
+        //默认深圳
+        this->ui->comboBox_city->setCurrentIndex(1943 - 2 - 1);
+    }
+
+    ui->casts_label->hide();
+    ui->pushButton_airPressure->hide();
+    ui->pushButton_apparentTemperature->hide();
+    ui->pushButton_cloudage->hide();
+    ui->pushButton_humidness->hide();
+    ui->pushButton_overview->hide();
+    ui->pushButton_precipitation->hide();
+    ui->pushButton_uv->hide();
+    ui->pushButton_visibility->hide();
+    ui->pushButton_windSpeed->hide();
+    ui->scrollArea->hide();
+    ui->pushButton_left->hide();
+    ui->pushButton_right->hide();
+
 
 }
 
 
 void CastsWeather::DrawWeatherData(HighAltitudeWeatherDataSturct::WeatherRequestReturnData tmp_weatherData)
 {
+    if(this->ui->drawWeatherData->isHidden())
+        this->ui->drawWeatherData->show();
     // 获取预报数据向量
-    QVector<HighAltitudeWeatherDataSturct::CastsWeatherData> casts = tmp_weatherData.forecastsWeatherData.casts_Vector;
+    this->casts.clear();
+    this->casts = tmp_weatherData.forecastsWeatherData.casts_Vector;
     if (casts.isEmpty()) return;
 
     // 准备数据容器
@@ -60,7 +194,7 @@ void CastsWeather::DrawWeatherData(HighAltitudeWeatherDataSturct::WeatherRequest
 
     // 清除之前的图表（如果需要保留其他元素，可选择性清除）
     ui->drawWeatherData->clearGraphs();
-    ui->drawWeatherData->clearItems(); // 如果有额外文本元素
+    // ui->drawWeatherData->clearItems(); // 如果有额外文本元素
 
     // 设置 x 轴为文本轴
     QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
@@ -69,6 +203,8 @@ void CastsWeather::DrawWeatherData(HighAltitudeWeatherDataSturct::WeatherRequest
     }
     ui->drawWeatherData->xAxis->setTicker(textTicker);
     ui->drawWeatherData->xAxis->setRange(-0.5, keys.size() - 0.5); // 留出边距
+
+    ui->drawWeatherData->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
     // 添加白天温度曲线
     ui->drawWeatherData->addGraph();
@@ -95,6 +231,15 @@ void CastsWeather::DrawWeatherData(HighAltitudeWeatherDataSturct::WeatherRequest
     ui->drawWeatherData->xAxis->setLabel("日期");
     ui->drawWeatherData->yAxis->setLabel("温度 (°C)");
 
+    // 设置字体颜色
+    ui->drawWeatherData->xAxis->setLabelColor(Qt::white);
+    ui->drawWeatherData->yAxis->setLabelColor(Qt::white);
+    ui->drawWeatherData->xAxis->setTickLabelColor(Qt::white);
+    ui->drawWeatherData->yAxis->setTickLabelColor(Qt::white);
+    // customPlot->xAxis2->setTickLabelColor(Qt::white);
+    // customPlot->yAxis2->setTickLabelColor(Qt::white);
+
+
     // 显示图例
     ui->drawWeatherData->legend->setVisible(true);
     ui->drawWeatherData->legend->setBrush(QColor(255, 255, 255, 200)); // 半透明背景
@@ -102,6 +247,24 @@ void CastsWeather::DrawWeatherData(HighAltitudeWeatherDataSturct::WeatherRequest
     // 允许用户交互（拖拽和缩放）
     ui->drawWeatherData->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
+    tracer_dayTemps->setGraph(ui->drawWeatherData->graph(0));  // 绑定到曲线
+
+    tracer_nightTemps->setGraph(ui->drawWeatherData->graph(1));  // 绑定到曲线
+
+
+    // // 设置绘图区背景图
+    // QPixmap plotBg(":/img/resources/images/mainPage.png"); // 替换为你的图片路径
+    // if (!plotBg.isNull()) {
+    //     QCPAxisRect *rect = ui->drawWeatherData->axisRect();
+    //     rect->setBackground(plotBg);
+    //     rect->setBackgroundScaled(true);
+    //     rect->setBackgroundScaledMode(Qt::IgnoreAspectRatio);
+    // } else {
+    //     qDebug() << "背景图片加载失败，请检查路径！";
+    // }
+
+    // 设置整个控件的背景色为半透明
+    ui->drawWeatherData->setBackground(QBrush(QColor(68, 59, 106)));
     // 重绘
     ui->drawWeatherData->replot();
 
@@ -111,4 +274,10 @@ void CastsWeather::UpdateWeatherData(HighAltitudeWeatherDataSturct::WeatherReque
 {
     this->ui->label_updateTime->setText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
     this->DrawWeatherData(tmp_weatherData);
+
+}
+
+void CastsWeather::showWeatherData(QMouseEvent *event)
+{
+
 }

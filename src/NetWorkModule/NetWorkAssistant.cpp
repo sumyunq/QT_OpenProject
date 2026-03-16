@@ -19,13 +19,13 @@ void NetWorkAssistant::InitMumbers()
     data.dataObjectType[0] = 0x05;
     qDebug()<<data.combinationInfo().toHex()<< "大小："<< data.combinationInfo().size();
 
-    this->cl_localTcpServer = new LocalTCPServer(this);
-    this->cl_localTcpClient = new LocalTCPClient(this);
+    // this->cl_localTcpServer = new LocalTCPServer(this);
+    // this->cl_localTcpClient = new LocalTCPClient(this);
 
-    cl_localTcpServer->StartServer(6868);
+    // cl_localTcpServer->StartServer(6868);
     // loadServerConfig(QString &host, quint16 &port)
 
-    cl_localTcpClient->connectToServer("127.0.0.1",6868);
+    // cl_localTcpClient->connectToServer("127.0.0.1",6868);
     // cl_localTcpServer->broadcast(data.combinationInfo());
 }
 
@@ -157,16 +157,28 @@ QByteArray NetWorkAssistant::getPeerAddressBytes(const QTcpSocket *socket)
     ipBytes[2] = (ipv4 >> 8) & 0xFF;    // 次低位，如 0
     ipBytes[3] = ipv4 & 0xFF;            // 最低位，如 1
 
-    // 按小端序（低字节在前）构建 4 字节 IP
-    QByteArray result;
-    result.append(static_cast<char>(ipBytes[3])); // 先存最低位
-    result.append(static_cast<char>(ipBytes[2]));
-    result.append(static_cast<char>(ipBytes[1]));
-    result.append(static_cast<char>(ipBytes[0])); // 最后存最高位
+    // 仅用于显示，字节序应在传输时再更改
+    // // 按小端序（低字节在前）构建 4 字节 IP
+    // QByteArray result;
+    // result.append(static_cast<char>(ipBytes[3])); // 先存最低位
+    // result.append(static_cast<char>(ipBytes[2]));
+    // result.append(static_cast<char>(ipBytes[1]));
+    // result.append(static_cast<char>(ipBytes[0])); // 最后存最高位
 
-    // 按小端序添加 2 字节端口
-    result.append(static_cast<char>(peerPort & 0xFF));       // 低字节
-    result.append(static_cast<char>((peerPort >> 8) & 0xFF)); // 高字节
+    // // 按小端序添加 2 字节端口
+    // result.append(static_cast<char>(peerPort & 0xFF));       // 低字节
+    // result.append(static_cast<char>((peerPort >> 8) & 0xFF)); // 高字节
+
+    // 构建 4 字节 IP
+    QByteArray result;
+    result.append(static_cast<char>(ipBytes[0]));
+    result.append(static_cast<char>(ipBytes[1]));
+    result.append(static_cast<char>(ipBytes[2]));
+    result.append(static_cast<char>(ipBytes[3]));
+
+    // 添加 2 字节端口
+    result.append(static_cast<char>((peerPort >> 8) & 0xFF));
+    result.append(static_cast<char>(peerPort & 0xFF));
 
     return result;
 }
